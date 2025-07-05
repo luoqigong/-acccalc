@@ -33,7 +33,7 @@ REM 提交更改
 echo 💾 提交更改...
 git commit -m "🔄 自动部署 - Google Analytics 已添加 - %timestamp%"
 
-REM 推送到GitHub
+REM 推送到GitHub (使用仓库 acccalc)
 echo 🌐 推送到GitHub...
 git push origin main
 if %errorlevel% neq 0 (

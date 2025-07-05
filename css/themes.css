@@ -1,0 +1,415 @@
+/* 深色主题样式 */
+[data-theme="dark"] {
+    --background-color: #0f172a;
+    --surface-color: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+}
+
+[data-theme="dark"] .header {
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .nav-brand {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .theme-toggle,
+[data-theme="dark"] .help-btn {
+    background: var(--surface-color);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .theme-toggle:hover,
+[data-theme="dark"] .help-btn:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .panel-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .mode-tabs {
+    background: #0f172a;
+}
+
+[data-theme="dark"] .tab-btn {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .tab-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .input-group {
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .input-group input {
+    background: var(--surface-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .unit-select {
+    background: #0f172a;
+    border-left: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .btn-secondary {
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .result-display {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .formula {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .learning-section {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+[data-theme="dark"] .learning-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .modal-content {
+    background: var(--surface-color);
+}
+
+[data-theme="dark"] .modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Dark模式页脚样式 */
+[data-theme="dark"] .footer {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    color: #e5e7eb;
+}
+
+[data-theme="dark"] .footer::before {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+}
+
+[data-theme="dark"] .footer-section:not(:first-child)::before {
+    background: linear-gradient(180deg, transparent, rgba(229, 231, 235, 0.1), transparent);
+}
+
+[data-theme="dark"] .footer-section h4 {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .footer-section h4 i {
+    color: inherit;
+}
+
+[data-theme="dark"] .footer-section:nth-child(1) h4 i { color: var(--primary-color); }
+[data-theme="dark"] .footer-section:nth-child(2) h4 i { color: var(--secondary-color); }
+[data-theme="dark"] .footer-section:nth-child(3) h4 i { color: var(--accent-color); }
+[data-theme="dark"] .footer-section:nth-child(4) h4 i { color: #10b981; }
+
+[data-theme="dark"] .footer-section p {
+    color: #d1d5db;
+}
+
+[data-theme="dark"] .footer-links a {
+    color: #d1d5db;
+}
+
+[data-theme="dark"] .footer-links a:hover {
+    color: #f3f4f6;
+}
+
+[data-theme="dark"] .footer-links a i {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .footer-links a:hover i {
+    color: var(--secondary-color);
+}
+
+[data-theme="dark"] .footer-section:last-child {
+    background: rgba(229, 231, 235, 0.05);
+    border: 1px solid rgba(229, 231, 235, 0.1);
+}
+
+[data-theme="dark"] .footer-section:last-child p {
+    color: #e5e7eb;
+}
+
+[data-theme="dark"] .footer-section:last-child a {
+    color: #f3f4f6;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(16, 185, 129, 0.15));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="dark"] .footer-section:last-child a:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(16, 185, 129, 0.25));
+    border-color: var(--primary-color);
+    color: #ffffff;
+}
+
+[data-theme="dark"] .footer-section:last-child a i {
+    color: #10b981;
+}
+
+[data-theme="dark"] .footer-bottom {
+    color: #9ca3af;
+    border-top: 1px solid #374151;
+}
+
+/* 高对比度主题样式 */
+[data-theme="high-contrast"] {
+    --background-color: #000000;
+    --surface-color: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --border-color: #000000;
+    --primary-color: #0000ff;
+    --primary-light: #0000ff;
+    --secondary-color: #0000ff;
+    --success-color: #008000;
+    --warning-color: #ff8000;
+    --error-color: #ff0000;
+}
+
+[data-theme="high-contrast"] .header {
+    background: var(--surface-color);
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .nav-brand {
+    color: var(--primary-color);
+}
+
+[data-theme="high-contrast"] .theme-toggle,
+[data-theme="high-contrast"] .help-btn {
+    background: var(--surface-color);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .theme-toggle:hover,
+[data-theme="high-contrast"] .help-btn:hover {
+    background: var(--text-primary);
+    color: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .panel-card {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .mode-tabs {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .tab-btn {
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .tab-btn:hover {
+    background: var(--text-primary);
+    color: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .tab-btn.active {
+    background: var(--primary-color);
+    color: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .input-group {
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .input-group:focus-within {
+    border-color: var(--primary-color);
+}
+
+[data-theme="high-contrast"] .input-group input {
+    background: var(--surface-color);
+    color: var(--text-primary);
+}
+
+[data-theme="high-contrast"] .unit-select {
+    background: var(--surface-color);
+    border-left: 2px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="high-contrast"] .btn-primary {
+    background: var(--primary-color);
+    color: var(--surface-color);
+    border: 2px solid var(--primary-color);
+}
+
+[data-theme="high-contrast"] .btn-secondary {
+    background: var(--surface-color);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .btn-secondary:hover {
+    background: var(--text-primary);
+    color: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .result-display {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .result-number {
+    color: var(--primary-color);
+    -webkit-text-fill-color: var(--primary-color);
+}
+
+[data-theme="high-contrast"] .formula {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="high-contrast"] .learning-section {
+    background: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .learning-card {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .card-icon {
+    background: var(--primary-color);
+    color: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .learn-more-btn {
+    background: var(--surface-color);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+[data-theme="high-contrast"] .learn-more-btn:hover {
+    background: var(--primary-color);
+    color: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .footer {
+    background: var(--text-primary);
+    color: var(--surface-color);
+    border-top: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .footer-section h4 {
+    color: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .footer-section p {
+    color: var(--surface-color);
+}
+
+[data-theme="high-contrast"] .footer-bottom {
+    color: var(--surface-color);
+    border-top: 2px solid var(--surface-color);
+}
+
+[data-theme="high-contrast"] .modal-content {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .modal-header {
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .modal-close {
+    background: var(--surface-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="high-contrast"] .modal-close:hover {
+    background: var(--text-primary);
+    color: var(--surface-color);
+}
+
+/* 主题切换动画 */
+body,
+.header,
+.panel-card,
+.modal-content,
+.learning-card,
+.footer {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 主题切换按钮图标 */
+[data-theme="light"] .theme-toggle i::before {
+    content: "\f186"; /* fa-moon */
+}
+
+[data-theme="dark"] .theme-toggle i::before {
+    content: "\f185"; /* fa-sun */
+}
+
+[data-theme="high-contrast"] .theme-toggle i::before {
+    content: "\f042"; /* fa-adjust */
+}
+
+/* 主题指示器 */
+.theme-indicator {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    z-index: 1001;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.theme-indicator.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 主题切换按钮状态 */
+.theme-toggle.switching {
+    transform: rotate(180deg);
+}
+
+/* 减少动画效果（为了可访问性） */
+@media (prefers-reduced-motion: reduce) {
+    [data-theme="dark"] *,
+    [data-theme="high-contrast"] *,
+    .theme-toggle {
+        transition: none !important;
+        animation: none !important;
+    }
+} 

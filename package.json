@@ -1,0 +1,35 @@
+{
+  "name": "acceleration-calculator",
+  "version": "1.0.0",
+  "description": "Free Online Acceleration Calculator - How to Calculate Acceleration",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s .",
+    "build": "echo 'Static site - no build needed'",
+    "test": "cd test && npm test",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "acceleration",
+    "calculator",
+    "physics",
+    "acceleration formula",
+    "how to calculate acceleration",
+    "physics calculator",
+    "online calculator",
+    "education"
+  ],
+  "author": "Acceleration Calculator Team",
+  "license": "MIT",
+  "homepage": "https://calcaccel.com",
+  "repository": {
+    "type": "git", 
+    "url": "https://github.com/YOUR_USERNAME/acceleration-calculator.git"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+} 

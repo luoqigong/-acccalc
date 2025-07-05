@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+
+# Important pages for SEO
+Allow: /index.html
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Sitemap location
+Sitemap: https://calcaccel.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# Block potentially sensitive files
+Disallow: /test/
+Disallow: /*.log
+Disallow: /admin/
+Disallow: /private/
+
+# Allow common bot user agents
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot  
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: / 

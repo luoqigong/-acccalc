@@ -290,46 +290,60 @@ function calculate(mode) {
     let result;
 
     try {
+        // 验证模式参数
+        if (!mode || typeof mode !== 'string') {
+            throw new Error('无效的计算模式参数');
+        }
+
+        // 辅助函数：安全获取元素值
+        function safeGetElementValue(id) {
+            const element = document.getElementById(id);
+            if (!element) {
+                throw new Error(`无法找到元素: ${id}`);
+            }
+            return element.value;
+        }
+
         switch (mode) {
             case 'velocity':
                 result = calculator.calculateFromVelocity(
-                    document.getElementById('vi1').value,
-                    document.getElementById('vf1').value,
-                    document.getElementById('t1').value,
-                    document.getElementById('vi1Unit').value,
-                    document.getElementById('vf1Unit').value,
-                    document.getElementById('t1Unit').value
+                    safeGetElementValue('vi1'),
+                    safeGetElementValue('vf1'),
+                    safeGetElementValue('t1'),
+                    safeGetElementValue('vi1Unit'),
+                    safeGetElementValue('vf1Unit'),
+                    safeGetElementValue('t1Unit')
                 );
                 break;
 
             case 'distance':
                 result = calculator.calculateFromDistance(
-                    document.getElementById('vi2').value,
-                    document.getElementById('d2').value,
-                    document.getElementById('t2').value,
-                    document.getElementById('vi2Unit').value,
-                    document.getElementById('d2Unit').value,
-                    document.getElementById('t2Unit').value
+                    safeGetElementValue('vi2'),
+                    safeGetElementValue('d2'),
+                    safeGetElementValue('t2'),
+                    safeGetElementValue('vi2Unit'),
+                    safeGetElementValue('d2Unit'),
+                    safeGetElementValue('t2Unit')
                 );
                 break;
 
             case 'force':
                 result = calculator.calculateFromForce(
-                    document.getElementById('m3').value,
-                    document.getElementById('f3').value,
-                    document.getElementById('m3Unit').value,
-                    document.getElementById('f3Unit').value
+                    safeGetElementValue('m3'),
+                    safeGetElementValue('f3'),
+                    safeGetElementValue('m3Unit'),
+                    safeGetElementValue('f3Unit')
                 );
                 break;
 
             case 'kinematic':
                 result = calculator.calculateFromKinematic(
-                    document.getElementById('vi4').value,
-                    document.getElementById('vf4').value,
-                    document.getElementById('s4').value,
-                    document.getElementById('vi4Unit').value,
-                    document.getElementById('vf4Unit').value,
-                    document.getElementById('s4Unit').value
+                    safeGetElementValue('vi4'),
+                    safeGetElementValue('vf4'),
+                    safeGetElementValue('s4'),
+                    safeGetElementValue('vi4Unit'),
+                    safeGetElementValue('vf4Unit'),
+                    safeGetElementValue('s4Unit')
                 );
                 break;
 
@@ -347,41 +361,74 @@ function calculate(mode) {
 
 // 显示计算结果
 function displayResult(result) {
-    const resultSection = document.getElementById('resultSection');
-    const resultValue = document.getElementById('resultValue');
-    const resultExplanation = document.getElementById('resultExplanation');
+    try {
+        const resultSection = document.getElementById('resultSection');
+        const resultValue = document.getElementById('resultValue');
+        const resultExplanation = document.getElementById('resultExplanation');
 
-    if (result.success) {
-        // 显示结果区域
-        resultSection.style.display = 'block';
-
-        // 格式化并显示数值
-        const numberElement = resultValue.querySelector('.result-number');
-        const unitElement = resultValue.querySelector('.result-unit');
-
-        // 动画显示数字
-        const currentValue = parseFloat(numberElement.textContent) || 0;
-        const newValue = parseFloat(formatNumber(result.result));
-        animateNumber(numberElement, currentValue, newValue);
-        
-        unitElement.textContent = 'm/s²';
-        resultExplanation.textContent = result.explanation;
-
-        // 验证结果合理性
-        const validation = calculator.validateResult(result);
-        if (!validation.isValid && validation.warnings.length > 0) {
-            const warningText = validation.warnings.join('；');
-            resultExplanation.innerHTML += `<br><span style="color: var(--warning-color);">⚠️ ${warningText}</span>`;
+        // 检查关键元素是否存在
+        if (!resultSection || !resultValue || !resultExplanation) {
+            console.error('关键结果显示元素不存在:', {
+                resultSection: !!resultSection,
+                resultValue: !!resultValue,
+                resultExplanation: !!resultExplanation
+            });
+            showToast('显示结果失败：页面元素未找到', 3000);
+            return;
         }
 
-        // 添加成功动画
-        resultSection.classList.add('fade-in');
-        showToast('计算完成！', 2000);
+        if (result.success) {
+            // 显示结果区域
+            resultSection.style.display = 'block';
 
-    } else {
-        // 隐藏结果区域并显示错误
-        resultSection.style.display = 'none';
-        showToast(result.error || '计算失败', 3000);
+            // 格式化并显示数值
+            const numberElement = resultValue.querySelector('.result-number');
+            const unitElement = resultValue.querySelector('.result-unit');
+
+            // 检查结果子元素是否存在
+            if (!numberElement || !unitElement) {
+                console.error('结果子元素不存在:', {
+                    numberElement: !!numberElement,
+                    unitElement: !!unitElement
+                });
+                showToast('显示结果失败：结果元素结构不完整', 3000);
+                return;
+            }
+
+            // 动画显示数字
+            const currentValue = parseFloat(numberElement.textContent) || 0;
+            const newValue = parseFloat(formatNumber(result.result));
+            
+            // 检查 formatNumber 函数是否存在
+            if (typeof formatNumber === 'function') {
+                animateNumber(numberElement, currentValue, newValue);
+            } else {
+                // 如果 formatNumber 不存在，直接显示数字
+                numberElement.textContent = result.result.toFixed(3);
+            }
+            
+            unitElement.textContent = 'm/s²';
+            resultExplanation.textContent = result.explanation;
+
+            // 验证结果合理性
+            const validation = calculator.validateResult(result);
+            if (!validation.isValid && validation.warnings.length > 0) {
+                const warningText = validation.warnings.join('；');
+                resultExplanation.innerHTML += `<br><span style="color: var(--warning-color);">⚠️ ${warningText}</span>`;
+            }
+
+            // 添加成功动画
+            resultSection.classList.add('fade-in');
+            showToast('计算完成！', 2000);
+
+        } else {
+            // 隐藏结果区域并显示错误
+            resultSection.style.display = 'none';
+            showToast(result.error || '计算失败', 3000);
+        }
+    } catch (error) {
+        console.error('显示结果时发生错误:', error);
+        showToast('显示结果失败，请刷新页面重试', 3000);
     }
 }
 
@@ -390,58 +437,84 @@ function resetForm(mode) {
     try {
         console.log('Reset form called with mode:', mode);
         
-        const panelId = `${mode}-panel`;
-        const panel = document.getElementById(panelId);
-        
-        console.log('Looking for panel with ID:', panelId);
-        console.log('Panel found:', panel);
-        
-        if (!panel) {
-            console.error(`无法找到面板元素: ${panelId}`);
-            showToast('重置失败：找不到对应的表单面板', 2000);
+        // 验证输入参数
+        if (!mode || typeof mode !== 'string') {
+            console.error('Invalid mode parameter:', mode);
+            showToast('重置失败：无效的模式参数', 2000);
             return;
         }
         
-        const inputs = panel.querySelectorAll('input');
-        const selects = panel.querySelectorAll('select');
+        const panelId = `${mode}-panel`;
+        console.log('Looking for panel with ID:', panelId);
         
-        console.log('Inputs found:', inputs.length);
-        console.log('Selects found:', selects.length);
-
-        // 清空输入框
-        inputs.forEach(input => {
-            input.value = '';
-            const inputGroup = input.closest('.input-group');
-            if (inputGroup && typeof clearError === 'function') {
-                clearError(inputGroup);
+        // 等待一小段时间确保DOM完全加载
+        setTimeout(() => {
+            const panel = document.getElementById(panelId);
+            console.log('Panel found:', panel);
+            
+            if (!panel) {
+                console.error(`无法找到面板元素: ${panelId}`);
+                showToast('重置失败：找不到对应的表单面板', 2000);
+                return;
             }
-        });
 
-        // 重置选择框到默认值
-        selects.forEach(select => {
-            select.selectedIndex = 0;
-        });
+            // 双重检查 panel 是否仍然存在
+            if (!panel || typeof panel.querySelectorAll !== 'function') {
+                console.error('Panel is null or invalid:', panel);
+                showToast('重置失败：表单面板无效', 2000);
+                return;
+            }
+            
+            const inputs = panel.querySelectorAll('input');
+            const selects = panel.querySelectorAll('select');
+            
+            console.log('Inputs found:', inputs.length);
+            console.log('Selects found:', selects.length);
 
-        // 隐藏结果区域
-        const resultSection = document.getElementById('resultSection');
-        if (resultSection) {
-            resultSection.style.display = 'none';
-        }
-        
-        // 清除计算器结果
-        if (calculator && typeof calculator.clearResult === 'function') {
-            calculator.clearResult();
-        }
+            // 清空输入框
+            if (inputs && inputs.length > 0) {
+                inputs.forEach(input => {
+                    if (input && typeof input.value !== 'undefined') {
+                        input.value = '';
+                        const inputGroup = input.closest('.input-group');
+                        if (inputGroup && typeof clearError === 'function') {
+                            clearError(inputGroup);
+                        }
+                    }
+                });
+            }
 
-        const modeNames = {
-            'velocity': '速度变化',
-            'distance': '距离时间',
-            'force': '力质量',
-            'kinematic': '运动学'
-        };
-        
-        const modeName = modeNames[mode] || mode;
-        showToast(`${modeName}模式已重置`, 1500);
+            // 重置选择框到默认值
+            if (selects && selects.length > 0) {
+                selects.forEach(select => {
+                    if (select && typeof select.selectedIndex !== 'undefined') {
+                        select.selectedIndex = 0;
+                    }
+                });
+            }
+
+            // 隐藏结果区域
+            const resultSection = document.getElementById('resultSection');
+            if (resultSection) {
+                resultSection.style.display = 'none';
+            }
+            
+            // 清除计算器结果
+            if (calculator && typeof calculator.clearResult === 'function') {
+                calculator.clearResult();
+            }
+
+            const modeNames = {
+                'velocity': '速度变化',
+                'distance': '距离时间',
+                'force': '力质量',
+                'kinematic': '运动学'
+            };
+            
+            const modeName = modeNames[mode] || mode;
+            showToast(`${modeName}模式已重置`, 1500);
+            
+        }, 10); // 10ms 延迟确保DOM完全准备好
         
     } catch (error) {
         console.error('Reset form error:', error);

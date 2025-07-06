@@ -428,7 +428,7 @@ document.addEventListener('keydown', function(e) {
     if (e.key >= '1' && e.key <= '3' && !e.ctrlKey && !e.altKey) {
         const activeElement = document.activeElement;
         if (activeElement.tagName !== 'INPUT') {
-            const modes = ['velocity', 'distance', 'force'];
+            const modes = ['velocity', 'distance', 'force', 'kinematic'];
             const modeIndex = parseInt(e.key) - 1;
             if (modes[modeIndex]) {
                 switchMode(modes[modeIndex]);

@@ -128,7 +128,7 @@
                     see step-by-step solutions, and understand acceleration in real-world applications.
                 </p>
                 <div class="hero-features">
-                    <span class="feature-badge"><i class="fas fa-calculator"></i> 3 Calculation Methods</span>
+                    <span class="feature-badge"><i class="fas fa-calculator"></i> 4 Calculation Methods</span>
                     <span class="feature-badge"><i class="fas fa-chart-line"></i> Visual Learning</span>
                     <span class="feature-badge"><i class="fas fa-mobile-alt"></i> Mobile Friendly</span>
                 </div>
@@ -161,6 +161,10 @@
                             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="force-panel" data-mode="force">
                                 <i class="fas fa-weight-hanging" aria-hidden="true"></i>
                                 <span>Force & Mass</span>
+                            </button>
+                            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="kinematic-panel" data-mode="kinematic">
+                                <i class="fas fa-arrows-alt-h" aria-hidden="true"></i>
+                                <span>Velocity & Displacement</span>
                             </button>
                         </div>
 
@@ -330,6 +334,67 @@
                                     </div>
                                 </form>
                             </div>
+
+                            <!-- Method 4: Velocity and Displacement -->
+                            <div class="calc-form" id="kinematic-panel" role="tabpanel" aria-labelledby="kinematic-tab">
+                                <h3>Calculate Acceleration from Velocity and Displacement</h3>
+                                <p class="method-description">Use this method when you know the initial velocity, final velocity, and displacement.</p>
+                                
+                                <form class="form-grid">
+                                    <div class="form-group">
+                                        <label for="vi4">Initial Velocity (v₀)</label>
+                                        <div class="input-group">
+                                            <input type="number" id="vi4" step="any" placeholder="Enter initial velocity" aria-describedby="vi4-help">
+                                            <select class="unit-select" id="vi4Unit" aria-label="Initial velocity unit">
+                                                <option value="m/s">m/s</option>
+                                                <option value="km/h">km/h</option>
+                                                <option value="ft/s">ft/s</option>
+                                                <option value="mph">mph</option>
+                                            </select>
+                                        </div>
+                                        <small id="vi4-help" class="help-text">Starting velocity of the object</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vf4">Final Velocity (v)</label>
+                                        <div class="input-group">
+                                            <input type="number" id="vf4" step="any" placeholder="Enter final velocity" aria-describedby="vf4-help">
+                                            <select class="unit-select" id="vf4Unit" aria-label="Final velocity unit">
+                                                <option value="m/s">m/s</option>
+                                                <option value="km/h">km/h</option>
+                                                <option value="ft/s">ft/s</option>
+                                                <option value="mph">mph</option>
+                                            </select>
+                                        </div>
+                                        <small id="vf4-help" class="help-text">Ending velocity of the object</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="s4">Displacement (s)</label>
+                                        <div class="input-group">
+                                            <input type="number" id="s4" step="any" placeholder="Enter displacement" aria-describedby="s4-help">
+                                            <select class="unit-select" id="s4Unit" aria-label="Displacement unit">
+                                                <option value="m">meters (m)</option>
+                                                <option value="km">kilometers (km)</option>
+                                                <option value="ft">feet (ft)</option>
+                                                <option value="mile">miles</option>
+                                            </select>
+                                        </div>
+                                        <small id="s4-help" class="help-text">Total displacement of the object</small>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-primary" onclick="calculate('kinematic')">
+                                            <i class="fas fa-calculator" aria-hidden="true"></i>
+                                            Calculate Acceleration
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" onclick="resetForm('kinematic')">
+                                            <i class="fas fa-redo" aria-hidden="true"></i>
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
                         <!-- Results Section -->
@@ -384,6 +449,15 @@
                                 <p class="formula-desc">Where: a = acceleration, F = net force, m = mass</p>
                                 <div class="formula-explanation">
                                     <strong>When to use:</strong> When you know the force applied and the object's mass.
+                                </div>
+                            </div>
+                            
+                            <div class="formula-item" data-mode="kinematic">
+                                <h3>Kinematic Equation Method</h3>
+                                <div class="formula">a = (v² - v₀²) / (2s)</div>
+                                <p class="formula-desc">Where: a = acceleration, v = final velocity, v₀ = initial velocity, s = displacement</p>
+                                <div class="formula-explanation">
+                                    <strong>When to use:</strong> When you know the initial velocity, final velocity, and displacement.
                                 </div>
                             </div>
                         </div>

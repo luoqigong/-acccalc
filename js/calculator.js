@@ -166,6 +166,60 @@ class AccelerationCalculator {
     }
 
     /**
+     * 模式D：基于初速度、末速度和位移计算加速度
+     * 公式：a = (v² - v₀²) / (2s)
+     */
+    calculateFromKinematic(vi, vf, s, viUnit, vfUnit, sUnit) {
+        try {
+            // 输入验证
+            const viValidation = validateInput(vi, 'non-negative');
+            const vfValidation = validateInput(vf, 'non-negative');
+            const sValidation = validateInput(s, 'positive');
+
+            if (!viValidation.isValid) {
+                throw new Error(`初始速度${viValidation.error}`);
+            }
+            if (!vfValidation.isValid) {
+                throw new Error(`最终速度${vfValidation.error}`);
+            }
+            if (!sValidation.isValid) {
+                throw new Error(`位移${sValidation.error}`);
+            }
+
+            // 转换为标准单位
+            const viStandard = toStandardUnit(viValidation.value, viUnit, 'velocity');
+            const vfStandard = toStandardUnit(vfValidation.value, vfUnit, 'velocity');
+            const sStandard = toStandardUnit(sValidation.value, sUnit, 'distance');
+
+            // 计算加速度 (m/s²)
+            const acceleration = (vfStandard * vfStandard - viStandard * viStandard) / (2 * sStandard);
+
+            this.lastResult = {
+                value: acceleration,
+                unit: 'm/s²',
+                mode: 'kinematic',
+                inputs: {
+                    vi: { value: viValidation.value, unit: viUnit },
+                    vf: { value: vfValidation.value, unit: vfUnit },
+                    s: { value: sValidation.value, unit: sUnit }
+                }
+            };
+
+            return {
+                success: true,
+                result: acceleration,
+                explanation: explainResult(acceleration, 'kinematic')
+            };
+
+        } catch (error) {
+            return {
+                success: false,
+                error: error.message
+            };
+        }
+    }
+
+    /**
      * 获取当前模式
      */
     getCurrentMode() {
@@ -176,7 +230,7 @@ class AccelerationCalculator {
      * 设置当前模式
      */
     setCurrentMode(mode) {
-        if (['velocity', 'distance', 'force'].includes(mode)) {
+        if (['velocity', 'distance', 'force', 'kinematic'].includes(mode)) {
             this.currentMode = mode;
         }
     }
@@ -268,6 +322,17 @@ function calculate(mode) {
                 );
                 break;
 
+            case 'kinematic':
+                result = calculator.calculateFromKinematic(
+                    document.getElementById('vi4').value,
+                    document.getElementById('vf4').value,
+                    document.getElementById('s4').value,
+                    document.getElementById('vi4Unit').value,
+                    document.getElementById('vf4Unit').value,
+                    document.getElementById('s4Unit').value
+                );
+                break;
+
             default:
                 throw new Error('未知的计算模式');
         }
@@ -322,22 +387,17 @@ function displayResult(result) {
 
 // 重置表单
 function resetForm(mode) {
-    const forms = {
-        velocity: 'velocityForm',
-        distance: 'distanceForm',
-        force: 'forceForm'
-    };
-
-    const formId = forms[mode];
-    if (formId) {
-        const form = document.getElementById(formId);
-        const inputs = form.querySelectorAll('input');
-        const selects = form.querySelectorAll('select');
+    const panelId = `${mode}-panel`;
+    const panel = document.getElementById(panelId);
+    
+    if (panel) {
+        const inputs = panel.querySelectorAll('input');
+        const selects = panel.querySelectorAll('select');
 
         // 清空输入框
         inputs.forEach(input => {
             input.value = '';
-            clearError(input.parentNode);
+            clearError(input.closest('.input-group'));
         });
 
         // 重置选择框到默认值
@@ -351,6 +411,6 @@ function resetForm(mode) {
         // 清除计算器结果
         calculator.clearResult();
 
-        showToast(`${mode === 'velocity' ? '速度变化' : mode === 'distance' ? '距离时间' : '力质量'}模式已重置`, 1500);
+        showToast(`${mode === 'velocity' ? '速度变化' : mode === 'distance' ? '距离时间' : mode === 'force' ? '力质量' : '运动学'}模式已重置`, 1500);
     }
 }

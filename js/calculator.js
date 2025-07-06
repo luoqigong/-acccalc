@@ -387,17 +387,34 @@ function displayResult(result) {
 
 // 重置表单
 function resetForm(mode) {
-    const panelId = `${mode}-panel`;
-    const panel = document.getElementById(panelId);
-    
-    if (panel) {
+    try {
+        console.log('Reset form called with mode:', mode);
+        
+        const panelId = `${mode}-panel`;
+        const panel = document.getElementById(panelId);
+        
+        console.log('Looking for panel with ID:', panelId);
+        console.log('Panel found:', panel);
+        
+        if (!panel) {
+            console.error(`无法找到面板元素: ${panelId}`);
+            showToast('重置失败：找不到对应的表单面板', 2000);
+            return;
+        }
+        
         const inputs = panel.querySelectorAll('input');
         const selects = panel.querySelectorAll('select');
+        
+        console.log('Inputs found:', inputs.length);
+        console.log('Selects found:', selects.length);
 
         // 清空输入框
         inputs.forEach(input => {
             input.value = '';
-            clearError(input.closest('.input-group'));
+            const inputGroup = input.closest('.input-group');
+            if (inputGroup && typeof clearError === 'function') {
+                clearError(inputGroup);
+            }
         });
 
         // 重置选择框到默认值
@@ -406,11 +423,28 @@ function resetForm(mode) {
         });
 
         // 隐藏结果区域
-        document.getElementById('resultSection').style.display = 'none';
+        const resultSection = document.getElementById('resultSection');
+        if (resultSection) {
+            resultSection.style.display = 'none';
+        }
         
         // 清除计算器结果
-        calculator.clearResult();
+        if (calculator && typeof calculator.clearResult === 'function') {
+            calculator.clearResult();
+        }
 
-        showToast(`${mode === 'velocity' ? '速度变化' : mode === 'distance' ? '距离时间' : mode === 'force' ? '力质量' : '运动学'}模式已重置`, 1500);
+        const modeNames = {
+            'velocity': '速度变化',
+            'distance': '距离时间',
+            'force': '力质量',
+            'kinematic': '运动学'
+        };
+        
+        const modeName = modeNames[mode] || mode;
+        showToast(`${modeName}模式已重置`, 1500);
+        
+    } catch (error) {
+        console.error('Reset form error:', error);
+        showToast('重置失败，请刷新页面重试', 2000);
     }
 }

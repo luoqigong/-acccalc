@@ -292,14 +292,14 @@ function calculate(mode) {
     try {
         // 验证模式参数
         if (!mode || typeof mode !== 'string') {
-            throw new Error('无效的计算模式参数');
+            throw new Error('Invalid calculation mode parameter');
         }
 
         // 辅助函数：安全获取元素值
         function safeGetElementValue(id) {
             const element = document.getElementById(id);
             if (!element) {
-                throw new Error(`无法找到元素: ${id}`);
+                throw new Error(`Cannot find element: ${id}`);
             }
             return element.value;
         }
@@ -348,14 +348,14 @@ function calculate(mode) {
                 break;
 
             default:
-                throw new Error('未知的计算模式');
+                throw new Error('Unknown calculation mode');
         }
 
         displayResult(result);
 
     } catch (error) {
-        console.error('计算错误:', error);
-        showToast('计算失败，请检查输入参数', 3000);
+        console.error('Calculation error:', error);
+        showToast('Calculation failed, please check input parameters', 3000);
     }
 }
 
@@ -368,12 +368,12 @@ function displayResult(result) {
 
         // 检查关键元素是否存在
         if (!resultSection || !resultValue || !resultExplanation) {
-            console.error('关键结果显示元素不存在:', {
+            console.error('Key result display elements not found:', {
                 resultSection: !!resultSection,
                 resultValue: !!resultValue,
                 resultExplanation: !!resultExplanation
             });
-            showToast('显示结果失败：页面元素未找到', 3000);
+            showToast('Display result failed: Page elements not found', 3000);
             return;
         }
 
@@ -387,11 +387,11 @@ function displayResult(result) {
 
             // 检查结果子元素是否存在
             if (!numberElement || !unitElement) {
-                console.error('结果子元素不存在:', {
+                console.error('Result sub-elements not found:', {
                     numberElement: !!numberElement,
                     unitElement: !!unitElement
                 });
-                showToast('显示结果失败：结果元素结构不完整', 3000);
+                showToast('Display result failed: Result element structure incomplete', 3000);
                 return;
             }
 
@@ -417,18 +417,18 @@ function displayResult(result) {
                 resultExplanation.innerHTML += `<br><span style="color: var(--warning-color);">⚠️ ${warningText}</span>`;
             }
 
-            // 添加成功动画
-            resultSection.classList.add('fade-in');
-            showToast('计算完成！', 2000);
+                    // 添加成功动画
+        resultSection.classList.add('fade-in');
+        showToast('Calculation completed!', 2000);
 
         } else {
-            // 隐藏结果区域并显示错误
-            resultSection.style.display = 'none';
-            showToast(result.error || '计算失败', 3000);
+                    // 隐藏结果区域并显示错误
+        resultSection.style.display = 'none';
+        showToast(result.error || 'Calculation failed', 3000);
         }
     } catch (error) {
-        console.error('显示结果时发生错误:', error);
-        showToast('显示结果失败，请刷新页面重试', 3000);
+        console.error('Error occurred while displaying result:', error);
+        showToast('Display result failed, please refresh the page and try again', 3000);
     }
 }
 
@@ -440,7 +440,7 @@ function resetForm(mode) {
         // 验证输入参数
         if (!mode || typeof mode !== 'string') {
             console.error('Invalid mode parameter:', mode);
-            showToast('重置失败：无效的模式参数', 2000);
+            showToast('Reset failed: Invalid mode parameter', 2000);
             return;
         }
         
@@ -453,15 +453,15 @@ function resetForm(mode) {
             console.log('Panel found:', panel);
             
             if (!panel) {
-                console.error(`无法找到面板元素: ${panelId}`);
-                showToast('重置失败：找不到对应的表单面板', 2000);
+                console.error(`Cannot find panel element: ${panelId}`);
+                showToast('Reset failed: Form panel not found', 2000);
                 return;
             }
 
             // 双重检查 panel 是否仍然存在
             if (!panel || typeof panel.querySelectorAll !== 'function') {
                 console.error('Panel is null or invalid:', panel);
-                showToast('重置失败：表单面板无效', 2000);
+                showToast('Reset failed: Form panel is invalid', 2000);
                 return;
             }
             
@@ -505,19 +505,19 @@ function resetForm(mode) {
             }
 
             const modeNames = {
-                'velocity': '速度变化',
-                'distance': '距离时间',
-                'force': '力质量',
-                'kinematic': '运动学'
+                'velocity': 'Velocity Change',
+                'distance': 'Distance & Time',
+                'force': 'Force & Mass',
+                'kinematic': 'Kinematics'
             };
             
             const modeName = modeNames[mode] || mode;
-            showToast(`${modeName}模式已重置`, 1500);
+            showToast(`${modeName} mode has been reset`, 1500);
             
         }, 10); // 10ms 延迟确保DOM完全准备好
         
     } catch (error) {
         console.error('Reset form error:', error);
-        showToast('重置失败，请刷新页面重试', 2000);
+        showToast('Reset failed, please refresh the page and try again', 2000);
     }
 }
